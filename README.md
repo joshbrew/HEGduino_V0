@@ -63,7 +63,7 @@ MAX30102s have built in ambient light cancellation however, so when samples are 
 
 For now, to correct for this, we noticed uniform oscillations in the sampling values so between those intervals we select the maximum value as the peak LED power being read from the 2nd sensor. This works well enough at the right settings, but is not ideal as we'd rather have complete synchronization in order to keep samples. 
 
-However, as you'll see below, the readings are good enough to resolve heart rhythm at about 10sps at the minimum stable sampling windows we could find, reduced from 1600/4 = 400sps effective sampling rate by the device, so the vast majority of samples are not able to be used in the current firmware while we just can just squeak by to get a usable FNIRS device. You are more than welcome to try and fix this issue as it would vastly improve the quality of this configuration.
+However, as you'll see above, the readings are good enough to resolve heart rhythm at about 10sps at the minimum stable sampling windows we could find, reduced from 1600/4 = 400sps effective sampling rate by the device, so the vast majority of samples are not able to be used in the current firmware while we just can just squeak by to get a usable FNIRS device. You are more than welcome to try and fix this issue as it would vastly improve the quality of this configuration.
 
 
 Joshua Brewster
