@@ -4,7 +4,7 @@ This repo contains assembly and flashing instructions for a simplified and more 
 
 ### Requirements:
 
-- ESP32
+- ESP32 Development Board
 - 2 MAX30102 breakout boards ($1-$5), MAX30100 or MAX30105 also work.
 - Arduino IDE
 
