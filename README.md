@@ -6,7 +6,7 @@ This repo contains assembly and flashing instructions for a simplified and more 
 
 ##### Hardware:
 
-To use the full-featured BLE + WiFi + Bluetooh Classic + USB firmware in the HEGduino_V0 folder you may use any ESP32 development board.
+To use the full-featured BLE + WiFi (including a little webapp) + Bluetooth Classic + USB firmware in the HEGduino_V0 folder you may use any ESP32 development board. We prefer the LOLIN32 clones ($4-$5) or otherwise use the Adafruit Feather if you don't trust them ($20).
 
 To use the Dual_MAX30102_Test, any Arduino device with two (2) I2C ports available can be used, or if you know how to reprogram to use only one I2C lane - our example relies on TwoWire.
 
@@ -14,7 +14,7 @@ To use the Dual_MAX30102_Test, any Arduino device with two (2) I2C ports availab
 
 [Arduino IDE](https://www.arduino.cc/en/Main/Software) with the espressif ESP32_Arduino libraries installed (easiest via the library manager)
 
-Alt environment: [PlatformIO](https://platformio.org/) via VSCode
+Alt environment: [PlatformIO](https://platformio.org/) via [VSCode](https://code.visualstudio.com/)
 
 ### Wiring:
 
