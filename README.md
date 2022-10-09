@@ -4,6 +4,10 @@ This repo contains assembly and flashing instructions for a simplified and more 
 
 ### Requirements:
 
+- ESP32
+- 2 MAX30102 breakout boards ($1-$5), MAX30100 or MAX30105 also work.
+- Arduino IDE
+
 ##### Hardware:
 
 To use the full-featured BLE + WiFi (including a little webapp) + Bluetooth Classic + USB firmware in the HEGduino_V0 folder you may use any ESP32 development board. We prefer the LOLIN32 clones ($4-$5) or otherwise use the Adafruit Feather if you don't trust them ($20).
