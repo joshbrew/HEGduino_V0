@@ -22,11 +22,11 @@ Alt environment: [PlatformIO](https://platformio.org/) via [VSCode](https://code
 
 ### Wiring:
 
-Assemble your ESP32 and two MAX30102 devices like so, spacing hte MAX30102s apart about 3cm or 1in in a headband. Make sure you aren't contacting the pins on your skin or that will short circuit the sensor.
+Assemble your ESP32 and two MAX30102 devices like so, spacing the MAX30102s apart about 3cm or 1in in a headband. Make sure you aren't contacting the pins on your skin or that will short circuit the sensor.
 
 ![wiring](./wiring.jpg)
 
-Any ESP32 will do, this demo was produced using the Feather ESP32 but we recommend the LOLIN32 clones as they can be flashed with a much lower power core clock of 80MHz instead of the full 240MHz the ESP32 is capable of, which we don't need.
+Any ESP32 will do, this demo was produced using the Adafruit Feather ESP32 board but we recommend the LOLIN32 clones as they can more easily be flashed with a much lower power core clock of 80MHz instead of the full 240MHz the ESP32 is capable of, which we don't need.
 
 The 2nd PPG device is used as the light sensor, and we attempt to sync the MAX30102 chips so that they may take simultaneous readings using only one set of LEDs. 
 
