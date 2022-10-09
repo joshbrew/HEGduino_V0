@@ -47,7 +47,7 @@ You need to select the correct board via the Boards menu and change the partitio
 
 ### Headset Assembly (WIP)
 
-Main thing is to use a ~3cm spacing and to pad foam between the PPG sensors so that there is minimal light interference through the forehead/scalp layer from the desired HEG signal. Otherwise you can mount it in a headset however. We will provide images and more description soon.
+Main thing is to use a ~3cm spacing and to pad foam between the PPG sensors so that there is minimal light interference through the forehead/scalp layer from the desired brain blood flow signal, or what we could call "depth pulse oximetry" in this case using two actual PPG devices, which is the same thing. We will provide images and more description soon of a headset.
 
 ### Desktop/Mobile PWA
 
