@@ -26,9 +26,7 @@ Any ESP32 will do, this demo was produced using the Feather ESP32 but we recomme
 
 The 2nd PPG device is used as the light sensor, and we attempt to sync the MAX30102 chips so that they may take simultaneous readings using only one set of LEDs. 
 
-
 ### Firmware: 
-
 
 First [install the ESP32 tools for Arduino](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html).
 Follow steps accordingly for your OS. 
@@ -44,6 +42,8 @@ You need to select the correct board via the Boards menu and change the partitio
 ![ppg2](./ppg2results.png)
 
 ### Headset Assembly (WIP)
+
+Main thing is to use a ~3cm spacing and to pad foam between the PPG sensors so that there is minimal light interference through the forehead/scalp layer from the desired HEG signal. Otherwise you can mount it in a headset however. We will provide images and more description soon.
 
 ### Desktop/Mobile PWA
 
