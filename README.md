@@ -37,7 +37,7 @@ Follow steps accordingly for your OS.
 
 Copy the `libraries` in this repo into your `Documents/Arduino` folder, you may need to update the Async web server library.
 
-If your USB port does not recognize the ESP32, you need to manually install the USB Drivers: [Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) - these usually to come by default in your OS.
+If your USB port does not recognize the ESP32, you need to manually install the USB Drivers: [Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) - these usually come by default in your OS.
 
 You need to select the correct board via the Boards menu and change the partition scheme to "Minimal SPIFFS" in the Arduino Tools menu before compiling and uploading to your ESP32. If available use the 80MHz CPU clock for lower power.
 
