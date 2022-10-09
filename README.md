@@ -1,6 +1,8 @@
 # HEGduino V0
 
-This repo contains assembly and flashing instructions for a simplified and more accessible HEGduino design. I came up with the idea for this design a couple years ago but never got around to finishing it after my first attempt failed. This works fairly well but the sensor synchronization needs improvement: see [Known Issues](#known-issues)
+This repo contains assembly and flashing instructions for a simplified and more accessible HEGduino design. This is by far the easiest solution while the original HEG_ESP32 repo was based off the expired patent for the original HEG. 
+
+I came up with the idea for this design a couple years ago but never got around to finishing it after my first attempt failed. This works fairly well but the sensor synchronization needs improvement: see [Known Issues](#known-issues)
 
 ### Requirements:
 
