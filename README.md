@@ -54,7 +54,7 @@ You need to select the correct board via the Boards menu and change the partitio
 
 ![hegresult](./hegresult.PNG)
 
-Heart rate pulse ought to be visible in the infrared range, but this is only possible if the readings are strong enough. You can move the sensors in to about 2.3cm apart minimum before you are reading more scalp PPG than FNIRs signal if you need to make the signal stronger. 
+Heart rate pulse ought to be visible in the infrared LED readings at least. This is only possible if the readings are strong enough, as you'll see normal PPG heart rhythm through your thumb. You can move the sensors in to about 2.3cm apart minimum before you are reading more scalp PPG than FNIRs signal if you need to make the signal stronger. 
 
 ### Ambient comparison
 
