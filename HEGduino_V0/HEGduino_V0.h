@@ -25,22 +25,22 @@
 byte interruptPin1 = 21;
 byte interruptPin2 = 15;
 
-float sps = 10; //~avg output at default setting
+float sps = 6; //~avg output at default setting
 
 MAX30105 PPG1;
 MAX30105 PPG2;
 
 byte LEDpwr = 255;
-byte sAvg = 4;
-int sRate = 1600;
+byte sAvg = 8;
+int sRate = 1600; //50 100 200 400 800 1000 1600 (max 400 for 411, 800 for 215, 1000 for 118, 1600 for 69. Max 3200 in LED mode 1 (single LED) on 69
 int ledMode = 2;
-int pulseWidth = 69;
+int pulseWidth = 69; //69 118 215 411
 int adcRange = 16384;
 
 byte redct = 0;
 byte irct = 0;
 
-byte irctmax = 10; //number of samples before the IR oscillates back to zero (due to desynchronized MAX30102 sensors with one taking ambient measurements trying to catch the LEDs from the other MAX30102)
+byte irctmax = 1; //number of samples before the IR oscillates back to zero (due to desynchronized MAX30102 sensors with one taking ambient measurements trying to catch the LEDs from the other MAX30102)
 
 bool USE_USB = true;
 
@@ -92,6 +92,23 @@ unsigned long sleepTimeout = 600000000; //10 minutes till sleep if no activity o
 unsigned long LEDMicros = 0;
 unsigned long LEDFrequency = 7500; //Time (in Microseconds) between each change in LED state (Red, IR, Ambient);
 
+int maxR2 = 0;
+int maxIR2 = 0;
+
+int R2_0 = 0;
+int R2_1 = 0;
+int R2_2 = 0;
+int R2_3 = 0;
+int R2_4 = 0;
+
+
+int IR2_0 = 0;
+int IR2_1 = 0;
+int IR2_2 = 0;
+int IR2_3 = 0;
+int IR2_4 = 0;
+
+
 void setupHEG() {
     
   // put your setup code here, to run once:
@@ -117,7 +134,13 @@ void setupHEG() {
   PPG2.shutDown();
 
   //user the same settings except PPG1 flashes the LEDs
-  PPG1.setup(LEDpwr, sAvg, ledMode, sRate, pulseWidth, adcRange);
+  PPG1.setup(LEDpwr, sAvg, ledMode, 800, 118, adcRange);
+
+
+  //PPG1.setPulseAmplitudeRed(255);
+  //PPG1.setPulseAmplitudeIR(255);
+
+  //delayMicroseconds(100) ///??? How to sync devices
   PPG2.setup(0x00, sAvg, ledMode, sRate, pulseWidth, adcRange);
 
   PPG1.wakeUp();
@@ -168,22 +191,51 @@ void sampleHEG(){
 
     while(PPG2.available()) {
 
-      //Serial.println(HEG1.read_reg(REG_FIFO_DATA_COUNT));
+        //Serial.println(HEG1.read_reg(REG_FIFO_DATA_COUNT));
           
        //int R1 = PPG1.getFIFORed();
        //int IR1 = PPG1.getFIFOIR();
        
        int R2 = PPG2.getFIFORed();
        int IR2 = PPG2.getFIFOIR();
-    
-        if(RED_AVG < R2) RED_AVG = float(R2);
-        if(IR_AVG < IR2) IR_AVG = float(IR2);
-        if(IR2 > 0) irct++;
 
-      if(IR2 == 0 && irct > irctmax) {
+//        Serial.print("Red: ");
+//        Serial.print(R2);
+//        Serial.print("\t");
+//        Serial.print("IR: ");
+//        Serial.println(IR2);
+    
+      if(R2_2 > IR2_2) {
+        if(maxR2 < R2_2 && R2_2 > R2_0 && R2_2 > R2_1 && R2_2 > R2_3 && R2_2 > R2_4) maxR2 = R2_2;
+      }
+      if(IR2_2 > R2_2) {
+        if(maxIR2 < IR2_2 && IR2_2 > IR2_0 && IR2_2 > IR2_1 && IR2_2 > IR2_3 && IR2_2 > IR2_4) maxIR2 = IR2_2;
+      }
+        
+      R2_4 = R2_3;
+      R2_3 = R2_2;
+      R2_2 = R2_1;
+      R2_1 = R2_0;
+      R2_0 = R2;
+  
+      IR2_4 = IR2_3;
+      IR2_3 = IR2_2;
+      IR2_2 = IR2_1;
+      IR2_1 = IR2_0;
+      IR2_0 = IR2;
+        
+      if(R2_4 > 0 && IR2_4 > 0 && (IR2 > R2 && IR2_4 < R2_4) && maxR2 > 0 && maxIR2 > 0) {
+        RED_AVG = float(maxR2);
+        IR_AVG = float(maxIR2);
+        //the lower of the two is the Red LED pulse
+        if(RED_AVG > IR_AVG) {
+          float temp = RED_AVG;
+          RED_AVG = IR_AVG;
+          IR_AVG = temp;  
+        }
+        
         RATIO_AVG = RED_AVG/IR_AVG;
 
-  
         if(MODE == "SPO2"){
           redBuffer.push(RED_AVG);
           irBuffer.push(IR_AVG);
@@ -224,12 +276,11 @@ void sampleHEG(){
             sprintf(outputarr, "%lu|%0.1f|%0.1f|%0.4f\r\n",
               currentMicros, RED_AVG, IR_AVG, RATIO_AVG);
         }
-        //Serial.print("Red: ");
-        //Serial.print(RED_AVG);
-        //Serial.print("\t");
-        //Serial.print("IR: ");
-        //Serial.print(IR_AVG);
-        //Serial.print("\t");
+//        Serial.print("Red: ");
+//        Serial.print(RED_AVG);
+//        Serial.print("\t");
+//        Serial.print("IR: ");
+//        Serial.print(IR_AVG);
   
         //Serial.println(outputarr);
   
@@ -238,9 +289,22 @@ void sampleHEG(){
         lastSampleMicros = currentMicros;
         lastRatio=RATIO_AVG;
 
+        R2_4 = 0;
+        R2_3 = 0;
+        R2_2 = 0;
+        R2_1 = 0;
+        R2_0 = 0;
+
+        IR2_4 = 0;
+        IR2_3 = 0;
+        IR2_2 = 0;
+        IR2_1 = 0;
+        IR2_0 = 0;
+        
+        maxR2 = 0;
+        maxIR2 = 0;
         RED_AVG = 0;
         IR_AVG = 0;
-        irct = 0;
       }
       
       PPG1.nextSample();
