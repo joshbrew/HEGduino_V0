@@ -4,6 +4,8 @@ This repo contains assembly and flashing instructions for a simplified and more 
 
 I came up with the idea for this design a couple years ago but never got around to finishing it after my first attempt failed. This works fairly well but the sensor synchronization needs improvement: see [Known Issues](#known-issues)
 
+The current firmware manages about 20sps using some tricks to sample between both PPGs where they have automatic microsecond LED pulses that subtract ambient light from subsequent readings between pulses. We can improve this with better firmware but this is what we could do 
+
 ### Requirements:
 
 - ESP32 Development Board
@@ -47,9 +49,22 @@ You need to select the correct board via the Boards menu and change the partitio
 
 ![ppg2](./ppg2results.png)
 
+
+### HEG result (some artifacts from low light level)
+
+![hegresult](./hegresult.PNG)
+
+Heart rate pulse ought to be visible in the infrared range, but this is only possible if the readings are strong enough. You can move the sensors in to about 2.3cm apart minimum before you are reading more scalp PPG than FNIRs signal if you need to make the signal stronger. 
+
+### Ambient comparison
+
+![ambient](./ambientresult.PNG)
+
 ### Headset Assembly (WIP)
 
-Main thing is to use a ~3cm spacing and to pad foam between the PPG sensors so that there is minimal light interference through the forehead/scalp layer from the desired brain blood flow signal, or what we could call "depth pulse oximetry" in this case using two actual PPG devices, which is the same thing. We will provide images and more description soon of a headset.
+Main thing is to use a 2.3-3cm spacing and to pad foam between the PPG sensors so that there is minimal light interference through the forehead/scalp layer from the desired brain blood flow signal, or what we could call "depth pulse oximetry" in this case using two actual PPG devices, which is the same thing. We will provide images and more description soon of a headset.
+
+Make sure the PPGs are not angled away from each other or you will only see ambient light readings. The firmware also assumes the red LED is brighter so you may need to adjust the pulse amplitude down if it is overpowering the IR LED, which is more likely at lower sensor reading levels. 
 
 ### Desktop/Mobile PWA
 
@@ -59,14 +74,14 @@ Main thing is to use a ~3cm spacing and to pad foam between the PPG sensors so t
 
 ### Known Issues
 
-The MAX30102 chips I am unable to correctly sync with interrupts or manual startup timing so far, so instead I am using the highest values between set intervals to report HEG values, which appears stable on the current configuration. This is something to be improved on but otherwise this beats the HEGduino V1.
+LED raw samples are not synced so we are compensating by selecting peaks manually based on observed characteristics:
 
-MAX30102s have built in ambient light cancellation however, so when samples are desynchronized the second sensor reads the LED lights as ambient and reports zeros or the rising and falling edges of the LED pulses.
+##### Raw readings before selecting peaks
+![raw](./outofsync.PNG)
 
-For now, to correct for this, we noticed uniform oscillations in the sampling values so between those intervals we select the maximum value as the peak LED power being read from the 2nd sensor. This works well enough at the right settings, but is not ideal as we'd rather have complete synchronization in order to keep samples. 
+I can't seem to sync the sampling periods between both devices, and other sequences in your firmware will change the nature of the synchronization here. To compensate we are selecting peaks between sampling periods and noticing that the red LED is usually reading out a lower value, which we can guarantee by lowering the power level on the Red LED. 
 
-However, as you'll see above, the readings are good enough to resolve heart rhythm at about 10sps at the minimum stable sampling windows we could find, reduced from 1600/4 = 400sps effective sampling rate by the device, so the vast majority of samples are not able to be used in the current firmware while we just can just squeak by to get a usable FNIRS device. You are more than welcome to try and fix this issue as it would vastly improve the quality of this configuration.
-
+Note the black MAX30102 breakout boards have reversed Red and Infrared positions from the sparkfun library spec but our little algorithm compensates automatically for that regardless of which MAX board you are using. Note that however when you want to change the pulse amplitude using the sparkfun library.
 
 Joshua Brewster
 

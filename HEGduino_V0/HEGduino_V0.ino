@@ -73,6 +73,8 @@ void setup(){
   if(sleep == 1){
     goToSleep();
   }
+
+  
   int wifiReset = EEPROM.read(509);
   int toggle = EEPROM.read(511);
   int ComMode = EEPROM.read(0); //Communication mode (WiFi, BLE, or BT Serial)
@@ -98,8 +100,7 @@ void setup(){
     saveWiFiLogin(true,false,false,false); //Reset WiFi credentials
   }
 
-  setupHEG();
-
+  setupHEG();  
   commandESP32('f');
 
   pinMode(12, INPUT);  //Switch OUT
@@ -171,8 +172,11 @@ void setup(){
   //Now set up the communication protocols (Only 1 active at a time for best results!)
   bootMicros = esp_timer_get_time();
   //toggleCheck();
-  commandESP32('t');
   Serial.println("Running...");
+
+  PPG1.clearFIFO();
+  PPG2.clearFIFO();
+  commandESP32('t');
 }
 
 
