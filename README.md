@@ -50,7 +50,7 @@ You need to select the correct board via the Boards menu and change the partitio
 ![ppg2](./ppg2results.png)
 
 
-### HEG result (some artifacts from low light level)
+### HEG result (some artifacts from our peak finding algorithm)
 
 ![hegresult](./hegresult.PNG)
 
