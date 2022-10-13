@@ -2,10 +2,6 @@
 
 This repo contains assembly and flashing instructions for a simplified and more accessible HEGduino design. This is by far the easiest solution while the original HEG_ESP32 repo was based off the expired patent for the original HEG. 
 
-I came up with the idea for this design a couple years ago but never got around to finishing it after my first attempt failed. This works fairly well but the sensor synchronization needs improvement: see [Known Issues](#known-issues)
-
-The current firmware manages about 20sps using some tricks to sample between both PPGs where they have automatic microsecond LED pulses that subtract ambient light from subsequent readings between pulses. We can improve this with better firmware but this is what we could do 
-
 ### Requirements:
 
 - ESP32 Development Board
@@ -86,3 +82,10 @@ Note the black MAX30102 breakout boards have reversed Red and Infrared positions
 Joshua Brewster
 
 AGPL V3 License
+
+
+Other Notes 
+
+I came up with the idea for this design a couple years ago but never got around to finishing it after my first attempt failed. This works fairly well but the sensor synchronization needs improvement: see [Known Issues](#known-issues)
+
+The current firmware manages about 20sps using some tricks to sample between both PPGs where they have automatic microsecond LED pulses that subtract ambient light from subsequent readings between pulses. We can improve this with better firmware but this is what we could do 
