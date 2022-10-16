@@ -60,7 +60,7 @@ Heart rate pulse ought to be visible in the infrared LED readings at least. This
 
 Main thing is to use a 2.3-3cm spacing and to pad foam between the PPG sensors so that there is minimal light interference through the forehead/scalp layer from the desired brain blood flow signal, or what we could call "depth pulse oximetry" in this case using two actual PPG devices, which is the same thing. We will provide images and more description soon of a headset.
 
-Make sure the PPGs are not angled away from each other or you will only see ambient light readings. The firmware also assumes the red LED is brighter so you may need to adjust the pulse amplitude down if it is overpowering the IR LED, which is more likely at lower sensor reading levels. 
+Make sure the PPGs are not angled away from each other or you will only see ambient light readings. The firmware also assumes the red LED is dimmer so you may need to adjust the pulse amplitude down if it is overpowering the IR LED, which is more likely at lower sensor reading levels. 
 
 ### Desktop/Mobile PWA
 
